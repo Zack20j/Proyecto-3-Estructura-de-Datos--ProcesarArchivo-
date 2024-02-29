@@ -22,8 +22,8 @@ class Engine {
 
     string obtenerIndiceOrdenado();
     void procesarArchivo(string contenidoArchivo);
-    void eliminarPalabra(string palabra); 
-    string buscarPalabra(string palabra) ;
+    void eliminarPalabra(string palabra);
+    string buscarPalabra(string palabra);
     string obtenerPaginasDeCapitulo(int numeroCapitulo);
     string obtenerContadoresDocumento();
     string obtenerCapituloInciosDEPaginas();

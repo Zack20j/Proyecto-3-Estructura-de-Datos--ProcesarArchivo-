@@ -1,5 +1,5 @@
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -7,7 +7,8 @@
 
 using namespace std;
 
-FileManager::FileManager(std::string filename) : filename(filename) {}
+FileManager::FileManager(std::string filename) : filename(filename) {
+}
 
 void FileManager::guardar(string nombreArchivo, string contenido) {
     std::ofstream archivo(nombreArchivo);
@@ -19,14 +20,13 @@ void FileManager::guardar(string nombreArchivo, string contenido) {
     }
 }
 
-string FileManager:: obtenerContenido() {
-
+string FileManager::obtenerContenido() {
     std::ifstream archivo(filename);
     if (!archivo.is_open()) {
-        return ""; 
+        return "";
     }
 
     std::stringstream buffer;
-    buffer << archivo.rdbuf(); 
+    buffer << archivo.rdbuf();
     return buffer.str();
 }

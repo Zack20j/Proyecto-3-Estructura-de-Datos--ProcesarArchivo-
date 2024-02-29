@@ -6,15 +6,13 @@
 using namespace std;
 
 class Menu {
-private:
-
-    string nombreArchivo;
-    void  pausar();
-    void limpiarPantalla();
-
-public:
+   public:
     void mostrarMenu();
-    
+
+   private:
+    string nombreArchivo;
+    void pausar();
+    void limpiarPantalla();
 };
 
-#endif // MENU_HPP
+#endif  // MENU_HPP

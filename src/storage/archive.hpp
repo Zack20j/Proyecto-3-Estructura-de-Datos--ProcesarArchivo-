@@ -6,14 +6,13 @@
 #include <string>
 
 class FileManager {
-public:
+   public:
     FileManager(std::string filename);
     std::string obtenerContenido();
-    void guardar(std::string nombreArchivo, std::string contenido) ;
+    void guardar(std::string nombreArchivo, std::string contenido);
 
-private:
+   private:
     std::string filename;
-    
 };
 
-#endif // FILEMANAGER_HPP
+#endif  // FILEMANAGER_HPP
