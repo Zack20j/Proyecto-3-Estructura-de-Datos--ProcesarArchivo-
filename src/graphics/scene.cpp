@@ -23,10 +23,18 @@ void Menu::pausar() {
 }
 
 void Menu::mostrarMenu() {
-    nombreArchivo = "ArchivoPrueba.txt";
-    Engine engine = Engine(nombreArchivo);
     string palabra;
     int opcion;
+
+    cout << "Ingrese el nombre del archivo de texto a analizar o presione "
+            "enter para usar el archivo de prueba: ";
+    getline(cin, nombreArchivo);
+
+    if (nombreArchivo.empty()) {
+        nombreArchivo = "ArchivoPrueba.txt";
+    }
+
+    Engine engine = Engine(nombreArchivo);
 
     do {
         cout << "=== Menú ===" << endl;
@@ -65,7 +73,8 @@ void Menu::mostrarMenu() {
                 engine.eliminarPalabra(palabra);
                 break;
             case 5:
-                cout << engine.obtenerCapituloInciosDEPaginas() << endl;
+                cout << engine.obtenerCapitulosYPaginas() << endl;
+                // cout << engine.obtenerCapituloInciosDEPaginas() << endl;
                 break;
             case 6:
                 cout << "Contadores del documento:" << endl;

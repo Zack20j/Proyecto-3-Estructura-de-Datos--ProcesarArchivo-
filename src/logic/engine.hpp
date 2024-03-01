@@ -27,10 +27,12 @@ class Engine {
     string obtenerPaginasDeCapitulo(int numeroCapitulo);
     string obtenerContadoresDocumento();
     string obtenerCapituloInciosDEPaginas();
+    string obtenerCapitulosYPaginas();//prueba
 
    private:
     map<string, vector<PaginaCapitulo>> indice;
     map<int, int> capitulos_paginas;
+    map<int, map<int, vector<string>>> contenidoPorCapitulo;
     int totalCapitulos = 0;
     int totalPaginas = 0;
     int totalLineas = 0;

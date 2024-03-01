@@ -18,6 +18,20 @@ Engine::Engine(string filename) {
                         obtenerContadoresDocumento());  // quizas no hace falta
 }
 
+string Engine::obtenerCapitulosYPaginas() {
+    string resultado = "Contenido del documento:\n";
+    for (const auto& par : contenidoPorCapitulo) {
+        resultado += "Capítulo " + to_string(par.first) + " - Página " + to_string(par.second.begin()->first) + "\n";
+        for (const auto& pagina : par.second) {
+            resultado += "Página " + to_string(pagina.first) + ":\n";
+            for (const auto& linea : pagina.second) {
+                resultado += linea + "\n";
+            }
+        }
+    }
+    return resultado;
+}
+
 string Engine::obtenerIndiceOrdenado() {
     string resultado;
     for (const auto& entrada : indice) {
@@ -124,12 +138,14 @@ void Engine::procesarArchivo(string contenidoArchivo) {
                 capitulos_paginas[capitulo_actual] = 1;
             } else {
                 capitulos_paginas[capitulo_actual] = pagina_actual;
+                
             }
 
         } else if (regex_search(linea, match, regex_pagina)) {
             pagina_actual++;
 
         } else {
+            contenidoPorCapitulo[capitulo_actual][pagina_actual].push_back(linea);//prueba
             for (sregex_iterator it(linea.begin(), linea.end(), regex_palabra),
                  end_it;
                  it != end_it; ++it) {
