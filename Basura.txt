@@ -1,0 +1,58 @@
+/*string Engine::obtenerIndiceOrdenado() {
+    string resultado;
+    for (const auto& entrada : indice) {
+        resultado += entrada.first + " - ";
+        for (const auto& pc : entrada.second) {
+            resultado += to_string(pc.pagina) + ", ";
+        }
+        resultado += "\n";
+    }
+    return resultado;
+}*/
+
+
+/*string Engine::obtenerPaginasDeCapitulo(int numeroCapitulo) {
+    if (numeroCapitulo > totalCapitulos || numeroCapitulo < 0) {
+        return "Capítulo inexistente";
+    }
+
+    string resultado = "Capítulo " + to_string(numeroCapitulo) + "\n";
+    for (const auto& entrada : indice) {
+        bool encontrada = false;
+        for (const auto& pc : entrada.second) {
+            if (pc.capitulo == numeroCapitulo) {
+                if (!encontrada) {
+                    resultado +=
+                        entrada.first + " : " + to_string(pc.pagina) + ", ";
+                    encontrada = true;
+                } else {
+                    resultado += to_string(pc.pagina) + ", ";
+                }
+            }
+        }
+        if (encontrada) {
+            resultado += "\n";
+        }
+    }
+    return resultado;
+}*/
+
+
+/*string Engine::obtenerCapituloInciosDEPaginas() {
+    string resultado = "Capitulos y en que página empiezan:\n";
+    for (const auto& par : capitulos_paginas) {
+        resultado += "Capítulo " + to_string(par.first) + " - Página " +
+                     to_string(par.second) + "\n";
+    }
+    return resultado;
+}*/
+
+//map<int, int> capitulos_paginas;
+
+
+            /*if (pagina_actual == 0) {
+                capitulos_paginas[capitulo_actual] = 1;
+            } else {
+                capitulos_paginas[capitulo_actual] = pagina_actual;
+                
+            }*/

@@ -21,17 +21,16 @@ class Engine {
     Engine(string filename);
 
     string obtenerIndiceOrdenado();
-    void procesarArchivo(string contenidoArchivo);
     void eliminarPalabra(string palabra);
     string buscarPalabra(string palabra);
-    string obtenerPaginasDeCapitulo(int numeroCapitulo);
+    string obtenerPalabrasDeCapitulo(int numeroCapitulo);
     string obtenerContadoresDocumento();
-    string obtenerCapituloInciosDEPaginas();
-    string obtenerCapitulosYPaginas();//prueba
+    string obtenerContenidoCapituloYPaginas();
 
    private:
+
+    void procesarArchivo(string contenidoArchivo);
     map<string, vector<PaginaCapitulo>> indice;
-    map<int, int> capitulos_paginas;
     map<int, map<int, vector<string>>> contenidoPorCapitulo;
     int totalCapitulos = 0;
     int totalPaginas = 0;

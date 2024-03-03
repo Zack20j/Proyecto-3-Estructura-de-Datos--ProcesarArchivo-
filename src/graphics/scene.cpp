@@ -59,7 +59,7 @@ void Menu::mostrarMenu() {
                 cout << "Ingrese el capítulo deseado: ";
                 int capitulo;
                 cin >> capitulo;
-                cout << engine.obtenerPaginasDeCapitulo(capitulo) << endl;
+                cout << engine.obtenerPalabrasDeCapitulo(capitulo) << endl;
                 break;
             case 3:
                 cout << "Ingrese la palabra a buscar: ";
@@ -73,8 +73,7 @@ void Menu::mostrarMenu() {
                 engine.eliminarPalabra(palabra);
                 break;
             case 5:
-                cout << engine.obtenerCapitulosYPaginas() << endl;
-                // cout << engine.obtenerCapituloInciosDEPaginas() << endl;
+                cout << engine.obtenerContenidoCapituloYPaginas() << endl;
                 break;
             case 6:
                 cout << "Contadores del documento:" << endl;

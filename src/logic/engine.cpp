@@ -14,14 +14,12 @@ Engine::Engine(string filename) {
     string contenidoArchivo = fileManager.obtenerContenido();
     procesarArchivo(contenidoArchivo);
     fileManager.guardar("indice_palabras.txt", obtenerIndiceOrdenado());
-    fileManager.guardar("contadores.txt",
-                        obtenerContadoresDocumento());  // quizas no hace falta
 }
 
-string Engine::obtenerCapitulosYPaginas() {
+string Engine::obtenerContenidoCapituloYPaginas() {
     string resultado = "Contenido del documento:\n";
     for (const auto& par : contenidoPorCapitulo) {
-        resultado += "Capítulo " + to_string(par.first) + " - Página " + to_string(par.second.begin()->first) + "\n";
+        resultado += "Capítulo " + to_string(par.first) + " Inicia en la Página " + to_string(par.second.begin()->first) + "\n";
         for (const auto& pagina : par.second) {
             resultado += "Página " + to_string(pagina.first) + ":\n";
             for (const auto& linea : pagina.second) {
@@ -34,8 +32,21 @@ string Engine::obtenerCapitulosYPaginas() {
 
 string Engine::obtenerIndiceOrdenado() {
     string resultado;
+    char letra_actual = '\0'; 
+
     for (const auto& entrada : indice) {
-        resultado += entrada.first + " - ";
+        string palabra = entrada.first;
+
+        if (palabra[0] != letra_actual) {
+            letra_actual = palabra[0]; 
+            if (letra_actual != '\0') {  
+                resultado += "\n";  
+            }
+            resultado += letra_actual; 
+            resultado += "\n";
+        }
+
+        resultado += palabra + " - ";
         for (const auto& pc : entrada.second) {
             resultado += to_string(pc.pagina) + ", ";
         }
@@ -44,14 +55,6 @@ string Engine::obtenerIndiceOrdenado() {
     return resultado;
 }
 
-string Engine::obtenerCapituloInciosDEPaginas() {
-    string resultado = "Contenido del documento:\n";
-    for (const auto& par : capitulos_paginas) {
-        resultado += "Capítulo " + to_string(par.first) + " - Página " +
-                     to_string(par.second) + "\n";
-    }
-    return resultado;
-}
 
 string Engine::obtenerContadoresDocumento() {
     string informacion;
@@ -63,29 +66,43 @@ string Engine::obtenerContadoresDocumento() {
     return informacion;
 }
 
-string Engine::obtenerPaginasDeCapitulo(int numeroCapitulo) {
+string Engine::obtenerPalabrasDeCapitulo(int numeroCapitulo) {
     if (numeroCapitulo > totalCapitulos || numeroCapitulo < 0) {
         return "Capítulo inexistente";
     }
 
     string resultado = "Capítulo " + to_string(numeroCapitulo) + "\n";
+
+    char letra_actual = '\0'; // Inicializar la letra actual con un valor que no sea una letra
+
+    // Iterar sobre cada entrada en el índice
     for (const auto& entrada : indice) {
-        bool encontrada = false;
+        const string& palabra = entrada.first;
+        string paginas;
+
+        // Verificar si la palabra aparece en el capítulo indicado
         for (const auto& pc : entrada.second) {
             if (pc.capitulo == numeroCapitulo) {
-                if (!encontrada) {
-                    resultado +=
-                        entrada.first + " : " + to_string(pc.pagina) + ", ";
-                    encontrada = true;
-                } else {
-                    resultado += to_string(pc.pagina) + ", ";
+                // Verificar si la primera letra de la palabra es una letra nueva
+                if (palabra[0] != letra_actual) {
+                    letra_actual = palabra[0]; // Actualizar la letra actual
+                    resultado += "\n" + string(1, letra_actual) + "\n"; // Agregar la letra como encabezado
                 }
+
+                // Agregar la página al resultado
+                if (!paginas.empty()) {
+                    paginas += ",";
+                }
+                paginas += to_string(pc.pagina);
             }
         }
-        if (encontrada) {
-            resultado += "\n";
+
+        // Agregar la palabra y las páginas al resultado
+        if (!paginas.empty()) {
+            resultado += palabra + " : " + paginas + "\n";
         }
     }
+
     return resultado;
 }
 
@@ -96,13 +113,12 @@ void Engine::eliminarPalabra(string palabra) {
     }
 
     indice.erase(palabra);
+
+    FileManager fileManager("indice_palabras.txt");
+    fileManager.guardar("indice_palabras.txt", obtenerIndiceOrdenado());
 }
 
 string Engine::buscarPalabra(string palabra) {
-    if (palabra == "" || indice.find(palabra) == indice.end()) {
-        return "Palabra inexistente";
-    }
-
     string resultado;
     auto it = indice.find(palabra);
     if (it != indice.end()) {
@@ -113,6 +129,8 @@ string Engine::buscarPalabra(string palabra) {
         // Eliminar la última coma y espacio
         resultado.pop_back();
         resultado.pop_back();
+    }else{
+        resultado = "Palabra inexistente";
     }
     return resultado;
 }
@@ -133,14 +151,6 @@ void Engine::procesarArchivo(string contenidoArchivo) {
         smatch match;
         if (regex_search(linea, match, regex_capitulo)) {
             capitulo_actual++;
-
-            if (pagina_actual == 0) {
-                capitulos_paginas[capitulo_actual] = 1;
-            } else {
-                capitulos_paginas[capitulo_actual] = pagina_actual;
-                
-            }
-
         } else if (regex_search(linea, match, regex_pagina)) {
             pagina_actual++;
 
